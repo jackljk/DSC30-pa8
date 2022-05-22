@@ -43,8 +43,8 @@ public class HashTable implements IHashTable {
      */
     public HashTable(int capacity) {
         /* Constructor initializes the array of the hash table */
-        int MIN_SIZE = 5;
-        if (capacity < MIN_SIZE){
+        int minSize = 5;
+        if (capacity < minSize){
             throw new IllegalArgumentException();
         }
         this.table = new String[capacity];
@@ -68,8 +68,8 @@ public class HashTable implements IHashTable {
         } else if (this.lookup(value)){
             return false;
         } else {
-            double LOAD_FACTOR = 0.55;
-            if ((double) this.size()/this.capacity() > LOAD_FACTOR) {
+            double loadFactor = 0.55;
+            if ((double) this.size()/this.capacity() > loadFactor) {
                 this.rehash();
             }
             int bucket = hashString(value); //Hash key of the string
@@ -230,7 +230,7 @@ public class HashTable implements IHashTable {
         int hashValue = 0;
         for (int i = 0;i<value.length();i++){
             int leftValue = hashValue << CRC_LEFT;
-            int rightValue = hashValue>>> CRC_RIGHT;
+            int rightValue = hashValue >>> CRC_RIGHT;
             hashValue = (leftValue | rightValue)^value.charAt(i);
         }
         return Math.abs(hashValue % this.table.length);
